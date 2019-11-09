@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: log
+    desc: DevOps Log Service
+    version: 4.0
+    packageName: com.tencent.devops.log
+
+  cloud:
+    consul:
+      host: 10.11.86.110
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+        register: true
+        healthCheckInterval: 15s
+        locator:
+          lower-case-service-id: true
+          enabled: true
+  elasticsearch:
+    ip: 10.11.81.39
+    port: 9200
+
+server:
+  port: 21914

@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:mysql://10.11.82.180/devops_ci_artifactory?useSSL=false&autoReconnect=true&timezone=+800&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: KINGsoft+5688
+
+  application:
+    name: environment
+    desc: DevOps Environment Service
+    version: 4.0
+    packageName: com.tencent.devops.environment
+
+  cloud:
+    consul:
+      host: 10.11.86.110
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+        register: true
+        healthCheckInterval: 15s
+        locator:
+          lower-case-service-id: true
+          enabled: true
+
+server:
+  port: 21919
+
+environment:
+  agent-package: D:\home\environment\module\agent-package
+
+#influxdb:
+#  server: __INFLUXDB_SERVER__
+#  userName: __INFLUXDB_USERNAME__
+#  password: __INFLUXDB_PASSWORD__

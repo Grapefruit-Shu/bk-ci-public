@@ -1,0 +1,44 @@
+# Common config Template 重复的通用的配置抽离在到
+
+spring:
+  application:
+    version: 4.0.0
+# consul config do not need to change
+  cloud:
+    consul:
+      host: 10.11.82.180
+      port: 8080
+      discovery:
+        tags: bkci
+# redis config
+  redis:
+#   # Redis sentinel 集群方式配置
+#    sentinel:
+#      master: 
+#      nodes: :
+#   # Redis 单机配置方式
+    host: 10.11.82.180
+    port: 6379
+    password: kingsoft
+    database: 0
+    pool:
+      max-active: 16
+      max-wait:  2000
+# rabbitmq config
+  rabbitmq:
+    virtual-host: bkci
+    username: bkci
+    password: bkci
+    addresses: 10.11.82.180:5672
+
+# http concurrency
+server:
+  undertow:
+    worker-threads: 100
+
+# gateway for system
+devopsGateway:
+  build: http://devops.testplus.cn:80        # for build agent like dev.devops.blueking.com:80
+  host: http://devops.testplus.cn:80         # for web many be same to buildGateWay
+  api: http://devops.testplus.cn:80          # for api many be same to host
+  outer: http://devops.testplus.cn:80        # for internet domain

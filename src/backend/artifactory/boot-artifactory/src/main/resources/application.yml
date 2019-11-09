@@ -1,0 +1,50 @@
+# 服务配置文件模板
+spring:
+  datasource:
+    url: jdbc:mysql://10.11.82.180/devops_ci_artifactory?useSSL=false&autoReconnect=true&timezone=+800&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: KINGsoft+5688
+  application:
+    name: artifactory
+    desc: DevOps Artifactory Service
+    version: 4.0.0
+    packageName: com.tencent.devops.artifactory
+  cloud:
+    consul:
+      host: 10.11.86.110
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        health-check-url: http://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+        register: true
+        healthCheckInterval: 15s
+        locator:
+          lower-case-service-id: true
+          enabled: true
+  profiles:
+    active: dev
+
+  redis:
+    host: 10.11.82.180
+    port: 6379
+    password: kingsoft
+    database: 0
+    pool:
+      max-active: 16
+      max-wait:  2000
+
+  rabbitmq:
+    virtual-host: bkci
+    username: bkci
+    password: bkci
+    addresses: 10.11.82.180:5672
+
+# 服务器端口配置，在同一台机器上部署多个微服务，端口号要不同 21920
+server:
+  port: 21929
+
+# 以下为构件存储目录，需要做分布式分享
+# 如果微服务是部署多机节点，则以下目录需要做成分布式高可用的，比如NFS，CephFS挂载
+# 保证多节点都能读取到
+artifactory:
+  archiveLocalBasePath: D:\home\public\artifactory
